@@ -91,7 +91,7 @@ final class ValueFirst implements ValueFirstInterface
      *
      * @return array
      */
-    private function getBody(string $to, string $message, string $messageType, string $tag = '', array $data = [], string $urlParam = null)
+    private function getBody(string $to, string $message, string $messageType, string $tag = '', array $data = [], string $urlParam = null, string $mediaData = null)
     {
         $body = [];
         $body['@VER'] = '1.2';
