@@ -78,7 +78,12 @@ final class ValueFirst implements ValueFirstInterface
             "data" => json_encode($this->getBody($to, $templateId, 'templateWithMedia', $tag, $data, null, $mediaData)),
             "action" => "send"
         );
-        $response = Http::asForm()->withToken(env('WA_TOKEN'))->post(env('VF_API_URI'), $params);
+        $response = Http::withHeaders([
+            'Accept' => 'application/json',
+            'Content-Type' => 'application/json',
+        ])
+            ->post(config('valuefirst.api_uri'), $params)
+        ;
 
         // Throw an exception if a client or server error occurred...
         $response->throw();
