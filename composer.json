@@ -10,7 +10,8 @@
     ],
     "homepage": "https://github.com/7span/laravel-valuefirst",
     "license": "MIT",
-    "authors": [{
+    "authors": [
+        {
             "name": "Hemratna Bhimani",
             "email": "hemratna.bhimani@gmail.com",
             "homepage": "https://github.com/7span/laravel-valuefirst",
@@ -24,7 +25,7 @@
         }
     ],
     "require": {
-        "php": "^7.2.5||^8.0"
+        "php": "^7.2.5||^8.0||^8.1"
     },
     "require-dev": {
         "psalm/plugin-laravel": "^1.2",
