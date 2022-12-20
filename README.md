@@ -101,6 +101,27 @@ $response=ValueFirst::sendTemplateMessage($to,$templateId,$data);
 
 // With passing tag
 $response=ValueFirst::sendTemplateMessage($to,$templateId,$data,$tag);
+```
+
+For sending whatsApp image messages using template ID
+
+
+``` php
+use ValueFirst;
+
+$to ='9111111111'; // Phone number with country code where we want to send message(Required)
+$templateId = "123"; //Approved template ID by ValueFirst
+$data = []; // Array of data to replace template data with dynamic one
+$tag = 'Whatsapp Message';  //Tag if you want to assign (Optional)
+$imageUrl = 'https://full/path/to/image.png'; //full path to a .png image with https:// 
+
+
+
+// Without passing tag
+$response=ValueFirst::sendTemplateMessageWithMedia($to,$templateId,$data, $imageUrl);
+
+// With passing tag
+$response=ValueFirst::sendTemplateMessageWithMedia($to,$templateId,$data, $imageUrl,$tag);
 
 ```
 > Note : While sending whatsapp message with template ID, array of data should be in sequence of template dynamic value.
