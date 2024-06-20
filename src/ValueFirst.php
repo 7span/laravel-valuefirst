@@ -66,13 +66,37 @@ final class ValueFirst implements ValueFirstInterface
 
         return $response->json();
     }
+    
+    /**
+     * @param string $data
+     *
+     * @return array|mixed
+     */
+    public function sendTemplateMessageWithMedia(string $to, string $templateId, array $data, string $mediaData , string $tag = '')
+    {
+        $params = array(
+            "data" => json_encode($this->getBody($to, $templateId, 'templateWithMedia', $tag, $data, null, $mediaData)),
+            "action" => "send"
+        );
+        $response = Http::withHeaders([
+            'Accept' => 'application/json',
+            'Content-Type' => 'application/json',
+        ])
+            ->post(config('valuefirst.api_uri'), $params)
+        ;
+
+        // Throw an exception if a client or server error occurred...
+        $response->throw();
+
+        return $response->json();
+    }
 
     /**
      * @param string $mesageType
      *
      * @return array
      */
-    private function getBody(string $to, string $message, string $messageType, string $tag = '', array $data = [], string $urlParam = null)
+    private function getBody(string $to, string $message, string $messageType, string $tag = '', array $data = [], string $urlParam = null, string $mediaData = null)
     {
         $body = [];
         $body['@VER'] = '1.2';
@@ -113,6 +137,14 @@ final class ValueFirst implements ValueFirstInterface
                 $sms['@B_URLINFO'] = $urlParam;
                 $sms['@TEMPLATEINFO'] = TemplateFormatter::formatTemplateData($message, $data);
 
+                break;
+                
+            case 'templateWithMedia':
+                $sms['@TEMPLATEINFO'] = $this->formatTemplateData($message, $data);
+                $sms['@MEDIADATA'] = $mediaData;
+                $sms['@MSGTYPE'] = '3';
+                $sms['@TYPE'] = "image";
+                $body['USER']['@CH_TYPE'] = '4';
                 break;
 
             default:
